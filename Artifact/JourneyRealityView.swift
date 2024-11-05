@@ -5,9 +5,12 @@ import ArtifactScenes
 
 struct JourneyRealityView: View {
     let journey: Journey
-
+    
     @StateObject private var viewModel: JourneyViewModel
-
+    @State private var scale: Float = 1.0
+    @State private var rotation: Float = 0.0
+    @State private var position: SIMD3<Float> = SIMD3(x: 0, y: 0.3, z: 0)
+    
     init(_ journey: Journey) {
         self.journey = journey
         
@@ -17,14 +20,14 @@ struct JourneyRealityView: View {
         } else {
             initialSceneName = ""
         }
-
+        
         _viewModel = StateObject(wrappedValue: JourneyViewModel(initialSceneName: initialSceneName))
     }
-
+    
     @State private var currentScene: Entity?
-
+    
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             RealityView { content in
                 content.camera = .spatialTracking
                 if let scene = currentScene {
@@ -46,34 +49,97 @@ struct JourneyRealityView: View {
                     await loadScene(named: viewModel.selectedSceneName)
                 }
             }
-            .ignoresSafeArea()
-
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
-                        ForEach(journey.artifacts) { artifact in
-                            BottomSheetView(sceneName: artifact.sceneName, viewModel: viewModel)
+            .gesture(
+                MagnificationGesture()
+                    .onChanged { value in
+                        let delta = Float(value - 1.0)
+                        let newScale = scale + delta
+                        let constrainedScale = min(max(newScale, 0.1), 3.0)
+                        
+                        if let anchor = currentScene {
+                            anchor.children.first?.scale = [constrainedScale, constrainedScale, constrainedScale]
                         }
                     }
-                    .padding(.horizontal, 20)
+                    .onEnded { _ in
+                        if let anchor = currentScene,
+                           let currentScale = anchor.children.first?.scale.x {
+                            scale = currentScale
+                        }
+                    }
+            )
+            .simultaneousGesture(
+                RotationGesture()
+                    .onChanged { angle in
+                        let newRotation = Float(angle.radians)
+                        if let anchor = currentScene {
+                            anchor.children.first?.orientation = simd_quatf(angle: newRotation, axis: SIMD3(0, 1, 0))
+                        }
+                    }
+                    .onEnded { angle in
+                        rotation = Float(angle.radians)
+                    }
+            )
+            .simultaneousGesture(
+                DragGesture()
+                    .onChanged { value in
+                        let translation = value.translation
+                        let newX = position.x + Float(translation.width) * 0.01
+                        let newZ = position.z - Float(translation.height) * 0.01
+                        
+                        if let anchor = currentScene {
+                            anchor.position = SIMD3(x: newX, y: position.y, z: newZ)
+                        }
+                    }
+                    .onEnded { _ in
+                        if let anchor = currentScene {
+                            position = anchor.position
+                        }
+                    }
+            )
+            .onTapGesture(count: 2) {
+                resetTransforms()
+            }
+            .ignoresSafeArea()
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 20) {
+                    ForEach(journey.artifacts) { artifact in
+                        BottomSheetView(sceneName: artifact.sceneName, viewModel: viewModel)
+                    }
                 }
+                .padding(.horizontal, 20)
             }
         }
     }
-
+    
     @MainActor
     private func loadScene(named sceneName: String) async {
         do {
             let scene = try await Entity(named: "\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
-            let anchor = AnchorEntity(plane: .horizontal)
+            let anchor = AnchorEntity(plane: .horizontal, classification: .floor)
+            anchor.position = SIMD3(x: 0, y: 0.3, z: 0)
             anchor.addChild(scene)
             currentScene = anchor
         } catch {
             print("Error loading scene \(sceneName): \(error)")
         }
     }
+    
+    private func resetTransforms() {
+        scale = 1.0
+        rotation = 0.0
+        position = SIMD3(x: 0, y: 0.3, z: 0)
+        
+        if let anchor = currentScene {
+            anchor.position = position
+            if let model = anchor.children.first {
+                model.scale = [scale, scale, scale]
+                model.orientation = simd_quatf(angle: rotation, axis: SIMD3(0, 1, 0))
+            }
+        }
+    }
 }
 
-//#Preview {
-//    JourneyRealityView()
-//}
+#Preview {
+    JourneyRealityView(Journey.sampleJourneys[0])
+}
