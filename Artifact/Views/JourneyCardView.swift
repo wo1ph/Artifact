@@ -32,7 +32,7 @@ struct JourneyCardView: View {
             .padding()
             .background(Color(.systemBackground))
             .cornerRadius(15)
-            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2) // TODO: decide on shadow
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)

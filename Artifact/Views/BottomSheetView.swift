@@ -7,7 +7,7 @@ struct BottomSheetView: View {
     
     var body: some View {
         Button(action: {
-            viewModel.selectedSceneName = sceneName  // Primary action: change 3D model
+            viewModel.selectedSceneName = sceneName
         }) {
             VStack {
                 HStack {
@@ -30,8 +30,8 @@ struct BottomSheetView: View {
             .shadow(radius: 5)
         }
         .buttonStyle(PlainButtonStyle())
-        .onLongPressGesture {
-            showingDetail = true  // Secondary action: show details
+        .onLongPressGesture { // TODO: Create a specific icon button to open details since this gesture isn't working
+            showingDetail = true
         }
         .sheet(isPresented: $showingDetail) {
             Text("Details")
