@@ -11,11 +11,16 @@ struct BottomSheetView: View {
         }) {
             VStack {
                 HStack {
-                    Text(sceneName)
+                    Text(sceneName.replacingOccurrences(of: "_", with: " "))
                         .font(.headline)
-                        .padding()
+                        .foregroundStyle(.black)
+                    
                     Spacer()
+                    Button("About") {
+                        showingDetail = true
+                    }
                 }
+                .padding()
                 .background(Color.white)
                 .cornerRadius(10)
             }
@@ -30,9 +35,6 @@ struct BottomSheetView: View {
             .shadow(radius: 5)
         }
         .buttonStyle(PlainButtonStyle())
-        .onLongPressGesture { // TODO: Create a specific icon button to open details since this gesture isn't working
-            showingDetail = true
-        }
         .sheet(isPresented: $showingDetail) {
             Text("Details")
         }

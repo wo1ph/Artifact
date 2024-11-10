@@ -97,13 +97,14 @@ struct JourneyRealityView: View {
     var rotateGesture: some Gesture {
         RotationGesture()
             .onChanged { angle in
-                let newRotation = Float(angle.radians)
+                let newRotation = Float(angle.radians) + rotation
                 if let anchor = currentScene {
                     anchor.children.first?.orientation = simd_quatf(angle: newRotation, axis: SIMD3(0, 1, 0))
                 }
             }
             .onEnded { angle in
-                rotation = Float(angle.radians)
+                rotation += Float(angle.radians)
+                rotation = rotation.truncatingRemainder(dividingBy: Float.pi * 2)
             }
     }
     
@@ -111,8 +112,8 @@ struct JourneyRealityView: View {
         DragGesture()
             .onChanged { value in
                 let translation = value.translation
-                let newX = position.x + Float(translation.width) * 0.01
-                let newZ = position.z - Float(translation.height) * 0.01
+                let newX = position.x + Float(translation.width) * 0.005
+                let newZ = position.z + Float(translation.height) * 0.005
                 
                 if let anchor = currentScene {
                     anchor.position = SIMD3(x: newX, y: position.y, z: newZ)
