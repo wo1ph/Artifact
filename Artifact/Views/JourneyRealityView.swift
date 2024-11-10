@@ -157,5 +157,5 @@ struct JourneyRealityView: View {
 }
 
 #Preview {
-    JourneyRealityView(Journey.sampleJourneys[0])
+    JourneyRealityView(Journey.sampleJourneys[1])
 }
