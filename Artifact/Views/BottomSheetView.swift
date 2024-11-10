@@ -2,6 +2,7 @@ import SwiftUI
 
 struct BottomSheetView: View {
     let sceneName: String
+    let info: String
     @ObservedObject var viewModel: JourneyViewModel
     @State private var showingDetail = false
     
@@ -16,8 +17,12 @@ struct BottomSheetView: View {
                         .foregroundStyle(.black)
                     
                     Spacer()
-                    Button("About") {
+                    Button(action: {
                         showingDetail = true
+                    }) {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(.blue)
+                            .font(.title2)
                     }
                 }
                 .padding()
@@ -36,7 +41,12 @@ struct BottomSheetView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .sheet(isPresented: $showingDetail) {
-            Text("Details")
+            Text(info)
+                .padding(.horizontal, 40)
         }
     }
+}
+
+#Preview {
+    BottomSheetView(sceneName: "Chichen Itza", info: "Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.", viewModel: .init(initialSceneName: "Chichen Itza"))
 }

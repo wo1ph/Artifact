@@ -68,7 +68,9 @@ struct JourneyRealityView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 ForEach(journey.artifacts) { artifact in
-                    BottomSheetView(sceneName: artifact.sceneName, viewModel: viewModel)
+                    BottomSheetView(sceneName: artifact.sceneName,
+                                    info: artifact.info,
+                                    viewModel: viewModel)
                 }
             }
             .padding(.horizontal, 20)
@@ -129,7 +131,7 @@ struct JourneyRealityView: View {
     @MainActor
     private func loadScene(named sceneName: String) async {
         do {
-            let scene = try await Entity(named: "\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
+            let scene = try await Entity(named: "\(journey.artifactPrefix)/\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
             let anchor = AnchorEntity(plane: .horizontal, classification: .floor)
             anchor.position = SIMD3(x: 0, y: 0.3, z: 0)
             anchor.addChild(scene)
