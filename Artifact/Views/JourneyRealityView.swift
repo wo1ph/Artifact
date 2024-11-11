@@ -133,7 +133,7 @@ struct JourneyRealityView: View {
         do {
             let scene = try await Entity(named: "\(journey.artifactPrefix)/\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
             let anchor = AnchorEntity(plane: .horizontal, classification: .floor)
-            anchor.position = SIMD3(x: 0, y: 0.3, z: 0)
+            anchor.position = SIMD3(x: 0, y: 0.4, z: 0)
             anchor.addChild(scene)
             currentScene = anchor
         } catch {
