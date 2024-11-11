@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D349F942CD7EB75003DF364 /* ArtifactScenes in Frameworks */ = {isa = PBXBuildFile; productRef = 7D349F932CD7EB75003DF364 /* ArtifactScenes */; };
+		7D4F7A0E2CE255C300DFA80E /* ArtifactScenes in Frameworks */ = {isa = PBXBuildFile; productRef = 7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7D4F7A092CE2551B00DFA80E /* Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		7DB080012CD66FA800527F7B /* Artifact */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -41,6 +47,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D349F942CD7EB75003DF364 /* ArtifactScenes in Frameworks */,
+				7D4F7A0E2CE255C300DFA80E /* ArtifactScenes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +57,7 @@
 		7DB07FF62CD66FA800527F7B = {
 			isa = PBXGroup;
 			children = (
+				7D4F7A092CE2551B00DFA80E /* Packages */,
 				7DB080012CD66FA800527F7B /* Artifact */,
 				7DB080002CD66FA800527F7B /* Products */,
 			);
@@ -79,11 +87,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				7D4F7A092CE2551B00DFA80E /* Packages */,
 				7DB080012CD66FA800527F7B /* Artifact */,
 			);
 			name = Artifact;
 			packageProductDependencies = (
 				7D349F932CD7EB75003DF364 /* ArtifactScenes */,
+				7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */,
 			);
 			productName = Artifact;
 			productReference = 7DB07FFF2CD66FA800527F7B /* Artifact.app */;
@@ -114,7 +124,7 @@
 			mainGroup = 7DB07FF62CD66FA800527F7B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7D349F922CD7EB75003DF364 /* XCLocalSwiftPackageReference "../ArtifactScenes" */,
+				7D4F7A0C2CE255C300DFA80E /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7DB080002CD66FA800527F7B /* Products */;
@@ -352,14 +362,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		7D349F922CD7EB75003DF364 /* XCLocalSwiftPackageReference "../ArtifactScenes" */ = {
+		7D4F7A0C2CE255C300DFA80E /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../ArtifactScenes;
+			relativePath = Packages/ArtifactScenes;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		7D349F932CD7EB75003DF364 /* ArtifactScenes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ArtifactScenes;
+		};
+		7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ArtifactScenes;
 		};
