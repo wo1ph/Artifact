@@ -15,8 +15,8 @@ def Xform "Root"
         prepend references = @great_wall.usdz@
     )
     {
-        float3 xformOp:scale = (0.0003, 0.0003, 0.0003)
-        float3 xformOp:translate = (0.0063946736, 0, 0.00024688244)
+        float3 xformOp:scale = (0.0005, 0.0005, 0.0005)
+        float3 xformOp:translate = (-0.5, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }
