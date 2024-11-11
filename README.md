@@ -1,8 +1,6 @@
 # Capstone Checkpoints 2 and 3 Submission
 
-Original capstone proposal: [https://github.com/wo1ph/kodeco-capstone-proposal/tree/proposal](https://github.com/wo1ph/kodeco-capstone-proposal/pull/1)
-
-# Kodeco capstone proposal
+# Original capstone proposal ([PR](https://github.com/wo1ph/kodeco-capstone-proposal/pull/1))
 
 ## *AR*tifact
 
