@@ -2,16 +2,13 @@
   "advancedEditorSelectedIdentifier" : "ProjectBrowser",
   "openSceneRelativePaths" : [
     "Solar\/Solar_Earth.usda",
-    "Solar\/Solar_Mars.usda",
     "Solar\/Solar_Jupiter.usda",
+    "Solar\/Solar_Mars.usda",
+    "Solar\/Solar_Mercury.usda",
+    "Solar\/Solar_Neptune.usda",
     "Solar\/Solar_Saturn.usda",
     "Solar\/Solar_Uranus.usda",
-    "Solar\/Solar_Neptune.usda",
-    "Solar\/Solar_Venus.usda",
-    "Solar\/Solar_Mercury.usda",
-    "7\/7_Great_Wall.usda",
-    "7\/7_Taj_Mahal.usda",
-    "7\/7_Petra.usda"
+    "Solar\/Solar_Venus.usda"
   ],
   "recentIdentifiers" : {
     "922A76D1-888A-4F2C-9417-ECB16E34B94F" : [
@@ -19,9 +16,104 @@
     ],
     "B61A88B3-19F2-457C-AD56-3D48C7CDE623" : [
 
+    ],
+    "F84F3CA9-32F8-4D7A-8893-F909B783C591" : [
+
     ]
   },
   "sceneCameraHistory" : {
+    "07037D7F-89AB-4FBF-A528-7B7D1013B713" : [
+      {
+        "date" : 753032965.041482,
+        "title" : "Untitled",
+        "transform" : [
+          0.2153632,
+          3.1464886e-10,
+          0.976534,
+          0,
+          0.7200083,
+          0.67555445,
+          -0.15878949,
+          0,
+          -0.6597019,
+          0.7373102,
+          0.14548957,
+          0,
+          -0.17379457,
+          0.19423999,
+          0.038328364,
+          1
+        ]
+      },
+      {
+        "date" : 753032962.100092,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7071069,
+          -0.70710677,
+          0,
+          0,
+          0.70710677,
+          0.7071069,
+          0,
+          0,
+          0.1862831,
+          0.18628311,
+          1
+        ]
+      },
+      {
+        "date" : 753032955.175101,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7071069,
+          -0.70710677,
+          0,
+          0,
+          0.70710677,
+          0.7071069,
+          0,
+          0,
+          0.39237213,
+          0.39237216,
+          1
+        ]
+      }
+    ],
+    "1839D52B-8E44-436B-8828-14E990F14525" : [
+      {
+        "date" : 753049109.267358,
+        "title" : "Untitled",
+        "transform" : [
+          1,
+          0,
+          -0,
+          0,
+          -0,
+          0.7071069,
+          -0.7071067,
+          0,
+          0,
+          0.7071067,
+          0.7071069,
+          0,
+          1.0400931e-07,
+          1.9595561,
+          1.9595478,
+          1
+        ]
+      }
+    ],
     "2CB14E71-128E-402C-8624-53F67C8D330C" : [
       {
         "date" : 752898103.494498,
@@ -1146,5 +1238,5 @@
   "sceneViewportBackgroundColors" : {
 
   },
-  "selectedSceneRelativePath" : "7\/7_Taj_Mahal.usda"
+  "selectedSceneRelativePath" : "Solar\/Solar_Venus.usda"
 }
