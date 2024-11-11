@@ -15,7 +15,7 @@ def Xform "Root"
         prepend references = @petra.usdz@
     )
     {
-        float3 xformOp:scale = (0.001, 0.001, 0.001)
+        float3 xformOp:scale = (0.0005, 0.0005, 0.0005)
         float3 xformOp:translate = (0, 0, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
