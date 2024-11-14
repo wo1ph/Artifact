@@ -142,7 +142,6 @@ struct JourneyRealityView: View {
         
         // Get scene from cache
         if let scene = viewModel.getCachedScene(named: viewModel.selectedSceneName)?.clone(recursive: true) {
-            print(scene)
             configureScene(scene)
             anchor.addChild(scene)
         }

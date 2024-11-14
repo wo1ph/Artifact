@@ -8,7 +8,9 @@ struct BottomSheetView: View {
     
     var body: some View {
         Button(action: {
-            viewModel.selectedSceneName = sceneName
+            Task {
+                await viewModel.selectScene(named: sceneName)
+            }
         }) {
             VStack {
                 HStack {
