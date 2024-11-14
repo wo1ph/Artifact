@@ -11,17 +11,17 @@ struct JourneyRealityView: View {
     @State private var rotation: Float = 0.0
     @State private var position: SIMD3<Float> = SIMD3(x: 0, y: 0.3, z: 0)
     
+    @State private var anchorEntity: AnchorEntity?
+    
     init(_ journey: Journey) {
         self.journey = journey
         
-        let initialSceneName: String
-        if let firstArtifact = journey.artifacts.first {
-            initialSceneName = firstArtifact.sceneName
-        } else {
-            initialSceneName = ""
-        }
-        
-        _viewModel = StateObject(wrappedValue: JourneyViewModel(initialSceneName: initialSceneName))
+        let initialSceneName = journey.artifacts.first?.sceneName ?? ""
+        _viewModel = StateObject(wrappedValue: JourneyViewModel(
+            initialSceneName: initialSceneName,
+            artifacts: journey.artifacts,
+            journeyPrefix: journey.artifactPrefix
+        ))
     }
     
     @State private var currentScene: Entity?
@@ -29,6 +29,9 @@ struct JourneyRealityView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             realityView
+            if case .loading = viewModel.sceneLoadingState {
+                loadingOverlay
+            }
             artifactSheets
         }
     }
@@ -36,23 +39,17 @@ struct JourneyRealityView: View {
     var realityView: some View {
         RealityView { content in
             content.camera = .spatialTracking
-            if let scene = currentScene {
-                content.add(scene)
+            let anchor = AnchorEntity(plane: .horizontal, classification: .floor)
+            anchor.position = position
+            content.add(anchor)
+            anchorEntity = anchor
+            
+            Task {
+                await viewModel.selectScene(named: viewModel.selectedSceneName)
             }
         } update: { content in
-            content.entities.removeAll()
-            if let scene = currentScene {
-                content.add(scene)
-            }
-        }
-        .onAppear {
             Task {
-                await loadScene(named: viewModel.selectedSceneName)
-            }
-        }
-        .onChange(of: viewModel.selectedSceneName) {
-            Task {
-                await loadScene(named: viewModel.selectedSceneName)
+                await updateScene()
             }
         }
         .gesture(scaleGesture)
@@ -62,6 +59,15 @@ struct JourneyRealityView: View {
             resetScene()
         }
         .ignoresSafeArea()
+    }
+    
+    var loadingOverlay: some View {
+        VStack {
+            ProgressView()
+            Text("Loading model...")
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black.opacity(0.3))
     }
     
     var artifactSheets: some View {
@@ -129,6 +135,25 @@ struct JourneyRealityView: View {
     }
     
     @MainActor
+    private func updateScene() async {
+        guard let anchor = anchorEntity else { return }
+        
+        anchor.children.removeAll()
+        
+        // Get scene from cache
+        if let scene = viewModel.getCachedScene(named: viewModel.selectedSceneName)?.clone(recursive: true) {
+            print(scene)
+            configureScene(scene)
+            anchor.addChild(scene)
+        }
+    }
+    
+    private func configureScene(_ scene: Entity) {
+        scene.scale = [scale, scale, scale]
+        scene.orientation = simd_quatf(angle: rotation, axis: SIMD3(0, 1, 0))
+    }
+    
+    @MainActor
     private func loadScene(named sceneName: String) async {
         do {
             let scene = try await Entity(named: "\(journey.artifactPrefix)/\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
@@ -156,6 +181,6 @@ struct JourneyRealityView: View {
     }
 }
 
-#Preview {
-    JourneyRealityView(Journey.sampleJourneys[1])
-}
+//#Preview {
+//    JourneyRealityView(Journey.sampleJourneys[1])
+//}
