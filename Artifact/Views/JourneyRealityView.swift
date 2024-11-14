@@ -90,12 +90,13 @@ struct JourneyRealityView: View {
                 let newScale = scale + delta
                 let constrainedScale = min(max(newScale, 0.1), 3.0)
                 
-                if let anchor = currentScene {
-                    anchor.children.first?.scale = [constrainedScale, constrainedScale, constrainedScale]
+                if let anchor = anchorEntity,
+                   let model = anchor.children.first {
+                    model.scale = [constrainedScale, constrainedScale, constrainedScale]
                 }
             }
             .onEnded { _ in
-                if let anchor = currentScene,
+                if let anchor = anchorEntity,
                    let currentScale = anchor.children.first?.scale.x {
                     scale = currentScale
                 }
@@ -106,8 +107,9 @@ struct JourneyRealityView: View {
         RotationGesture()
             .onChanged { angle in
                 let newRotation = Float(angle.radians) + rotation
-                if let anchor = currentScene {
-                    anchor.children.first?.orientation = simd_quatf(angle: newRotation, axis: SIMD3(0, 1, 0))
+                if let anchor = anchorEntity,
+                   let model = anchor.children.first {
+                    model.orientation = simd_quatf(angle: newRotation, axis: SIMD3(0, 1, 0))
                 }
             }
             .onEnded { angle in
@@ -120,18 +122,31 @@ struct JourneyRealityView: View {
         DragGesture()
             .onChanged { value in
                 let translation = value.translation
-                let newX = position.x + Float(translation.width) * 0.005
-                let newZ = position.z + Float(translation.height) * 0.005
+                let newX = position.x + Float(translation.width) * 0.003
+                let newZ = position.z + Float(translation.height) * 0.003
                 
-                if let anchor = currentScene {
+                if let anchor = anchorEntity {
                     anchor.position = SIMD3(x: newX, y: position.y, z: newZ)
                 }
             }
             .onEnded { _ in
-                if let anchor = currentScene {
+                if let anchor = anchorEntity {
                     position = anchor.position
                 }
             }
+    }
+    
+    private func resetScene() {
+        scale = 1.0
+        rotation = 0.0
+        position = SIMD3(x: 0, y: 0.3, z: 0)
+        
+        if let anchor = anchorEntity,
+           let model = anchor.children.first {
+            anchor.position = position
+            model.scale = [scale, scale, scale]
+            model.orientation = simd_quatf(angle: rotation, axis: SIMD3(0, 1, 0))
+        }
     }
     
     @MainActor
@@ -162,20 +177,6 @@ struct JourneyRealityView: View {
             currentScene = anchor
         } catch {
             print("Error loading scene \(sceneName): \(error)")
-        }
-    }
-    
-    private func resetScene() {
-        scale = 1.0
-        rotation = 0.0
-        position = SIMD3(x: 0, y: 0.3, z: 0)
-        
-        if let anchor = currentScene {
-            anchor.position = position
-            if let model = anchor.children.first {
-                model.scale = [scale, scale, scale]
-                model.orientation = simd_quatf(angle: rotation, axis: SIMD3(0, 1, 0))
-            }
         }
     }
 }
