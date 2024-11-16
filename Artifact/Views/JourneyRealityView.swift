@@ -6,7 +6,7 @@ import ArtifactScenes
 struct JourneyRealityView: View {
     let journey: Journey
     
-    @StateObject private var viewModel: JourneyViewModel
+    @StateObject private var viewModel: ArtifactScenesViewModel
     @State private var scale: Float = 1.0
     @State private var rotation: Float = 0.0
     @State private var position: SIMD3<Float> = SIMD3(x: 0, y: 0.3, z: 0)
@@ -17,14 +17,12 @@ struct JourneyRealityView: View {
         self.journey = journey
         
         let initialSceneName = journey.artifacts.first?.sceneName ?? ""
-        _viewModel = StateObject(wrappedValue: JourneyViewModel(
+        _viewModel = StateObject(wrappedValue: ArtifactScenesViewModel(
             initialSceneName: initialSceneName,
             artifacts: journey.artifacts,
             journeyPrefix: journey.artifactPrefix
         ))
     }
-    
-    @State private var currentScene: Entity?
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -165,19 +163,6 @@ struct JourneyRealityView: View {
     private func configureScene(_ scene: Entity) {
         scene.scale = [scale, scale, scale]
         scene.orientation = simd_quatf(angle: rotation, axis: SIMD3(0, 1, 0))
-    }
-    
-    @MainActor
-    private func loadScene(named sceneName: String) async {
-        do {
-            let scene = try await Entity(named: "\(journey.artifactPrefix)/\(journey.artifactPrefix)_\(sceneName)", in: artifactScenesBundle)
-            let anchor = AnchorEntity(plane: .horizontal, classification: .floor)
-            anchor.position = SIMD3(x: 0, y: 0.4, z: 0)
-            anchor.addChild(scene)
-            currentScene = anchor
-        } catch {
-            print("Error loading scene \(sceneName): \(error)")
-        }
     }
 }
 

@@ -9,7 +9,7 @@ enum SceneLoadingState {
     case failed(Error)
 }
 
-class JourneyViewModel: ObservableObject {
+class ArtifactScenesViewModel: ObservableObject {
     @Published var selectedSceneName: String
     @Published private(set) var sceneLoadingState: SceneLoadingState = .notLoaded
     

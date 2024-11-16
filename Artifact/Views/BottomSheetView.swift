@@ -3,7 +3,7 @@ import SwiftUI
 struct BottomSheetView: View {
     let sceneName: String
     let info: String
-    @ObservedObject var viewModel: JourneyViewModel
+    @ObservedObject var viewModel: ArtifactScenesViewModel
     @State private var showingDetail = false
     
     var body: some View {
