@@ -6,7 +6,7 @@ import ArtifactScenes
 struct JourneyRealityView: View {
     let journey: Journey
     
-    @StateObject private var viewModel: ArtifactScenesViewModel
+    @StateObject private var artifactScenesViewModel: ArtifactScenesViewModel
     @State private var scale: Float = 1.0
     @State private var rotation: Float = 0.0
     @State private var position: SIMD3<Float> = SIMD3(x: 0, y: 0.3, z: 0)
@@ -17,7 +17,7 @@ struct JourneyRealityView: View {
         self.journey = journey
         
         let initialSceneName = journey.artifacts.first?.sceneName ?? ""
-        _viewModel = StateObject(wrappedValue: ArtifactScenesViewModel(
+        _artifactScenesViewModel = StateObject(wrappedValue: ArtifactScenesViewModel(
             initialSceneName: initialSceneName,
             artifacts: journey.artifacts,
             journeyPrefix: journey.artifactPrefix
@@ -27,8 +27,10 @@ struct JourneyRealityView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             realityView
-            if case .loading = viewModel.sceneLoadingState {
-                loadingOverlay
+            if case .loading = artifactScenesViewModel.sceneLoadingState {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(2.0)
             }
             artifactSheets
         }
@@ -43,7 +45,7 @@ struct JourneyRealityView: View {
             anchorEntity = anchor
             
             Task {
-                await viewModel.selectScene(named: viewModel.selectedSceneName)
+                await artifactScenesViewModel.selectScene(named: artifactScenesViewModel.selectedSceneName)
             }
         } update: { content in
             Task {
@@ -59,22 +61,13 @@ struct JourneyRealityView: View {
         .ignoresSafeArea()
     }
     
-    var loadingOverlay: some View {
-        VStack {
-            ProgressView()
-            Text("Loading model...")
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.3))
-    }
-    
     var artifactSheets: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 ForEach(journey.artifacts) { artifact in
                     BottomSheetView(sceneName: artifact.sceneName,
                                     info: artifact.info,
-                                    viewModel: viewModel)
+                                    viewModel: artifactScenesViewModel)
                 }
             }
             .padding(.horizontal, 20)
@@ -154,7 +147,7 @@ struct JourneyRealityView: View {
         anchor.children.removeAll()
         
         // Get scene from cache
-        if let scene = viewModel.getCachedScene(named: viewModel.selectedSceneName)?.clone(recursive: true) {
+        if let scene = artifactScenesViewModel.getCachedScene(named: artifactScenesViewModel.selectedSceneName)?.clone(recursive: true) {
             configureScene(scene)
             anchor.addChild(scene)
         }
@@ -166,6 +159,6 @@ struct JourneyRealityView: View {
     }
 }
 
-//#Preview {
-//    JourneyRealityView(Journey.sampleJourneys[1])
-//}
+#Preview {
+    JourneyRealityView(Journey.sampleJourneys[1])
+}
