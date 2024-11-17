@@ -3,6 +3,9 @@ import SwiftUI
 struct BottomSheetView: View {
     let sceneName: String
     let info: String
+    
+    let journeyProgressManager = JourneyProgressManager()
+    
     @ObservedObject var viewModel: ArtifactScenesViewModel
     @State private var showingDetail = false
     

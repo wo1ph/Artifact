@@ -17,6 +17,8 @@ class ArtifactScenesViewModel: ObservableObject {
     private var preloadTasks: Set<Task<Void, Never>> = []
     private let maxCacheSize = 4
     
+    private let journeyProgressManager = JourneyProgressManager()
+    
     private var currentIndex: Int = 0
     private var artifacts: [Artifact] = []
     private var journeyPrefix: String = ""
@@ -42,6 +44,12 @@ class ArtifactScenesViewModel: ObservableObject {
         
         cancelPreloadTasks()
         await loadSelectedAndPreloadNext()
+        
+        // if the scene loaded successfully,
+        // mark it as viewed in UserDefaults
+        if case .loaded = sceneLoadingState {
+            journeyProgressManager.markArtifactViewed(journeyPrefix: journeyPrefix, artifactName: sceneName)
+        }
     }
     
     private func loadSelectedAndPreloadNext() async {
