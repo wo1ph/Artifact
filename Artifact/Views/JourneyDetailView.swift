@@ -41,8 +41,6 @@ struct JourneyDetailView: View {
         .onAppear {
             viewedArtifactsCount = journeyProgressManager.getViewedArtifacts(for: journey.artifactPrefix).count
         }
-        .navigationTitle(journey.title)
-        
     }
     
     @ViewBuilder
