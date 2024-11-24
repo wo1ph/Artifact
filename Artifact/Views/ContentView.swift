@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var journeysViewModel = JourneysViewModel()
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    ForEach(Journey.sampleJourneys, id: \.self.title) { journey in
+                    ForEach(journeysViewModel.journeys, id: \.self.title) { journey in
                         NavigationLink(destination: JourneyDetailView(journey)) {
                             JourneyCardView(journey)
                         }
@@ -14,6 +16,9 @@ struct ContentView: View {
                 }
                 .padding()
             }
+        }
+        .onAppear {
+            journeysViewModel.loadJourneys()
         }
     }
 }

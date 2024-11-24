@@ -15,8 +15,9 @@ def Xform "Root"
         prepend references = @TAJ_MAHAL.usdz@
     )
     {
-        float3 xformOp:scale = (0.00001, 0.00001, 0.00001)
-        float3 xformOp:translate = (0, 0.23593155, 0)
+        quatf xformOp:orient = (0.99999994, 0, 0, 0)
+        float3 xformOp:scale = (0.0000060015773, 0.0000060015773, 0.0000060015773)
+        float3 xformOp:translate = (0, 0.23593156, 0)
         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
     }
 }

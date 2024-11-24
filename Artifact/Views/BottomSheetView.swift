@@ -3,12 +3,17 @@ import SwiftUI
 struct BottomSheetView: View {
     let sceneName: String
     let info: String
-    @ObservedObject var viewModel: JourneyViewModel
+    
+    let journeyProgressManager = JourneyProgressManager()
+    
+    @ObservedObject var viewModel: ArtifactScenesViewModel
     @State private var showingDetail = false
     
     var body: some View {
         Button(action: {
-            viewModel.selectedSceneName = sceneName
+            Task {
+                await viewModel.selectScene(named: sceneName)
+            }
         }) {
             VStack {
                 HStack {
@@ -48,5 +53,5 @@ struct BottomSheetView: View {
 }
 
 #Preview {
-    BottomSheetView(sceneName: "Chichen Itza", info: "Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.", viewModel: .init(initialSceneName: "Chichen Itza"))
+    BottomSheetView(sceneName: "Chichen Itza", info: "Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.", viewModel: .init(initialSceneName: "Chichen Itza", artifacts: [], journeyPrefix: ""))
 }
