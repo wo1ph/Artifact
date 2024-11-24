@@ -70,5 +70,5 @@ struct JourneyDetailView: View {
 }
 
 #Preview {
-    JourneyDetailView(Journey.sampleJourneys.first!)
+    JourneyDetailView(Journey.sampleJourneys[1])
 }
