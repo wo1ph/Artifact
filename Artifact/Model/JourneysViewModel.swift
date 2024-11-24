@@ -9,6 +9,11 @@ class JourneysViewModel: ObservableObject {
     private let service = JourneyService()
     
     func loadJourneys() {
+        guard !ProcessInfo.isPreview else {
+            journeys = Journey.sampleJourneys
+            return
+        }
+        
         isLoading = true
         
         Task {
@@ -19,6 +24,12 @@ class JourneysViewModel: ObservableObject {
             }
             isLoading = false
         }
+    }
+}
+
+extension ProcessInfo {
+    static var isPreview: Bool {
+        ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
 }
 

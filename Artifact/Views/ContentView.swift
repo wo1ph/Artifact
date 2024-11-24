@@ -16,7 +16,6 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            
             .navigationTitle("Journeys")
         }
         .onAppear {
