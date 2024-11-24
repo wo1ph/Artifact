@@ -7,7 +7,11 @@ struct BottomSheetView: View {
     let journeyProgressManager = JourneyProgressManager()
     
     @ObservedObject var viewModel: ArtifactScenesViewModel
-    @State private var showingDetail = false
+    @State private var showingDetail = true // TODO: Change to False
+    
+    var artifactName: String {
+        sceneName.replacingOccurrences(of: "_", with: " ")
+    }
     
     var body: some View {
         Button(action: {
@@ -17,7 +21,7 @@ struct BottomSheetView: View {
         }) {
             VStack {
                 HStack {
-                    Text(sceneName.replacingOccurrences(of: "_", with: " "))
+                    Text(artifactName)
                         .font(.headline)
                         .foregroundStyle(.black)
                     
@@ -46,8 +50,33 @@ struct BottomSheetView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .sheet(isPresented: $showingDetail) {
-            Text(info)
-                .padding(.horizontal, 40)
+            ZStack(alignment: .top) {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(.systemBackground))
+                    .shadow(radius: 5)
+                    .edgesIgnoringSafeArea(.bottom)
+                
+                VStack(spacing: 16) {
+                    Text("Chichen Itza")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.top, 40)
+                    
+                    Text("Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.")
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .padding(.horizontal, 30)
+                }
+                .padding(.bottom, 16)
+
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 40, height: 5)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+                    .padding(.top, 8)
+            }
+            .frame(maxWidth: .infinity, alignment: .top)
         }
     }
 }
