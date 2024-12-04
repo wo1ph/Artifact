@@ -10,23 +10,32 @@ struct OnboardingPage: Identifiable {
 struct OnboardingView: View {
     @State private var currentPage = 0
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     
     let pages = [
         OnboardingPage(
-            image: "globe",
-            title: "Choose a Journey",
-            description: "Discover wonders across the globe through immersive AR experiences"
+            image: "map",
+            title: "Choose your Journey",
+            description: "A Journey is an immersive and interactive exploration. Browse through a variety of destinations and select one to begin your adventure. Within, you will uncover mixed reality scenes to learn about fascinating topics."
         ),
         OnboardingPage(
-            image: "sparkles",
-            title: "Discover Artifacts",
-            description: "Engage with detailed 3D models and learn fascinating facts"
+            image: "magnifyingglass",
+            title: "Discover ARtifacts",
+            description: "ARtifacts are 3D objects that bring Journeys to life, right in your space! After starting a Journey, select an ARtifact at the bottom of the screen to view it in augmented reality. Move, scale, and rotate it to inspect every detail further."
         )
     ]
     
+    private var backgroundColor: Color {
+        colorScheme == .dark ? .black : .white
+    }
+    
+    private var textColor: Color {
+        colorScheme == .dark ? .white : .black
+    }
+    
     var body: some View {
         ZStack {
-            Color.black
+            backgroundColor
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -35,46 +44,53 @@ struct OnboardingView: View {
                     Button("Skip") {
                         dismiss()
                     }
-                    .foregroundColor(.white)
-                    .padding()
+                    .foregroundColor(textColor)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 16)
                 }
+                
+                Spacer()
                 
                 TabView(selection: $currentPage) {
                     ForEach(pages.indices, id: \.self) { index in
-                        VStack(spacing: 32) {
+                        VStack(spacing: 40) {
                             Image(systemName: pages[index].image)
-                                .font(.system(size: 100))
-                                .foregroundColor(.white)
+                                .font(.system(size: 80, weight: .light))
+                                .foregroundColor(textColor)
+                                .frame(height: 80)
                             
-                            Text(pages[index].title)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                            
-                            Text(pages[index].description)
-                                .font(.body)
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white.opacity(0.8))
-                                .padding(.horizontal, 32)
-                            
-                            Spacer()
+                            VStack(spacing: 16) {
+                                Text(pages[index].title)
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundColor(textColor)
+                                
+                                Text(pages[index].description)
+                                    .font(.system(size: 16))
+                                    .lineSpacing(4)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(textColor.opacity(0.8))
+                                    .padding(.horizontal, 32)
+                                    .frame(maxWidth: 360)
+                            }
                         }
+                        .padding(.bottom, 40)
                         .tag(index)
                     }
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 
-                VStack(spacing: 24) {
+                Spacer()
+                
+                VStack(spacing: 32) {
                     HStack(spacing: 8) {
                         ForEach(0..<pages.count, id: \.self) { index in
                             Circle()
-                                .fill(currentPage == index ? Color.white : Color.white.opacity(0.5))
+                                .fill(currentPage == index ? textColor : textColor.opacity(0.5))
                                 .frame(width: 8, height: 8)
                                 .scaleEffect(currentPage == index ? 1.2 : 1.0)
                                 .animation(.spring(), value: currentPage)
                         }
                     }
-                    .padding(.top, 24)
                     
                     Button(action: {
                         if currentPage < pages.count - 1 {
@@ -87,10 +103,10 @@ struct OnboardingView: View {
                     }) {
                         Text(currentPage < pages.count - 1 ? "Continue" : "Get Started")
                             .font(.headline)
-                            .foregroundColor(.black)
+                            .foregroundColor(backgroundColor)
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.white)
+                            .padding(.vertical, 16)
+                            .background(textColor)
                             .cornerRadius(20)
                     }
                     .padding(.horizontal, 24)
