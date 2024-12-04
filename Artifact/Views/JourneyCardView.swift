@@ -26,10 +26,11 @@ struct JourneyCardView: View {
             
             Text(journey.title)
                 .font(.headline)
-                .padding(.vertical)
+                .padding(.top)
 
             Text(journey.tagLine)
                 .multilineTextAlignment(.leading)
+                .padding(.top, 1)
         }
         .frame(width: 300)
         .padding()

@@ -1,22 +1,21 @@
 import SwiftUI
 
 struct BottomSheetView: View {
-    let sceneName: String
-    let info: String
+    let artifact: Artifact
     
     let journeyProgressManager = JourneyProgressManager()
     
     @ObservedObject var viewModel: ArtifactScenesViewModel
-    @State private var showingDetail = true // TODO: Change to False
+    @State private var showingDetail = false
     
     var artifactName: String {
-        sceneName.replacingOccurrences(of: "_", with: " ")
+        artifact.sceneName.replacingOccurrences(of: "_", with: " ")
     }
     
     var body: some View {
         Button(action: {
             Task {
-                await viewModel.selectScene(named: sceneName)
+                await viewModel.selectScene(named: artifact.sceneName)
             }
         }) {
             VStack {
@@ -57,16 +56,32 @@ struct BottomSheetView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 
                 VStack(spacing: 16) {
-                    Text("Chichen Itza")
+                    Text(artifactName)
                         .font(.title2)
                         .fontWeight(.bold)
                         .padding(.top, 40)
                     
-                    Text("Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.")
+                    Spacer()
+                    
+                    Text(artifact.info)
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .lineSpacing(4)
                         .padding(.horizontal, 30)
+                    
+                    AsyncImage(url: URL(string: "https://artifact-ios.s3.us-east-2.amazonaws.com/\(artifact.sceneName.lowercased())")) { phase in
+                        if let image = phase.image {
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipped()
+                                .cornerRadius(10)
+                        }
+                    }
+                    .padding()
+                    
+                    
+                    Spacer()
                 }
                 .padding(.bottom, 16)
 
@@ -82,5 +97,6 @@ struct BottomSheetView: View {
 }
 
 #Preview {
-    BottomSheetView(sceneName: "Chichen Itza", info: "Once a thriving Maya city, Chichen Itza is home to the iconic El Castillo pyramid, an architectural masterpiece that reveals the Maya’s advanced understanding of astronomy.", viewModel: .init(initialSceneName: "Chichen Itza", artifacts: [], journeyPrefix: ""))
+    let artifact = Journey.sampleJourneys.first!.artifacts.first!
+    BottomSheetView(artifact: artifact, viewModel: .init(initialSceneName: artifact.sceneName, artifacts: [], journeyPrefix: ""))
 }

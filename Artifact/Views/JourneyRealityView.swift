@@ -65,8 +65,7 @@ struct JourneyRealityView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 ForEach(journey.artifacts) { artifact in
-                    BottomSheetView(sceneName: artifact.sceneName,
-                                    info: artifact.info,
+                    BottomSheetView(artifact: artifact,
                                     viewModel: artifactScenesViewModel)
                 }
             }
