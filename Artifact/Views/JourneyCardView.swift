@@ -8,7 +8,7 @@ struct JourneyCardView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             AsyncImage(url: URL(string: journey.imageUrl)) { phase in
                 if let image = phase.image {
                     image
@@ -22,22 +22,25 @@ struct JourneyCardView: View {
                         .frame(height: 200)
                         .cornerRadius(10)
                 }
-                
-                Text(journey.title)
-                    .font(.headline)
-                    .padding(.top, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(width: 300)
-            .padding()
-            .background(Color(.systemBackground))
-            .cornerRadius(15)
-            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2) // TODO: decide on shadow
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-            )
+            
+            Text(journey.title)
+                .font(.headline)
+                .padding(.top)
+
+            Text(journey.tagLine)
+                .multilineTextAlignment(.leading)
+                .padding(.top, 1)
         }
+        .frame(width: 300)
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(15)
+        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 2)
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+        )
     }
 }
 

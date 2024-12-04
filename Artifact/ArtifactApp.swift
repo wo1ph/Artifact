@@ -1,10 +1,3 @@
-//
-//  ArtifactApp.swift
-//  Artifact
-//
-//  Created by Reese, Wolf on 11/2/24.
-//
-
 import SwiftUI
 
 @main
