@@ -292,7 +292,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Artifact/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ARtifacts;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to view artifacts";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to bring ARtifacts into your space. This allows you to view and interact with 3D models in augmented reality.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -323,7 +323,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Artifact/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ARtifacts;
-				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to view artifacts";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is needed to bring ARtifacts into your space. This allows you to view and interact with 3D models in augmented reality.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
