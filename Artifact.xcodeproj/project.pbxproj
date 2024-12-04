@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7D349F942CD7EB75003DF364 /* ArtifactScenes in Frameworks */ = {isa = PBXBuildFile; productRef = 7D349F932CD7EB75003DF364 /* ArtifactScenes */; };
 		7D4F7A0E2CE255C300DFA80E /* ArtifactScenes in Frameworks */ = {isa = PBXBuildFile; productRef = 7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */; };
+		7DFD1ABA2D009BE100D1430C /* ArtifactScenes in Frameworks */ = {isa = PBXBuildFile; productRef = 7DFD1AB92D009BE100D1430C /* ArtifactScenes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D349F942CD7EB75003DF364 /* ArtifactScenes in Frameworks */,
+				7DFD1ABA2D009BE100D1430C /* ArtifactScenes in Frameworks */,
 				7D4F7A0E2CE255C300DFA80E /* ArtifactScenes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,6 +96,7 @@
 			packageProductDependencies = (
 				7D349F932CD7EB75003DF364 /* ArtifactScenes */,
 				7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */,
+				7DFD1AB92D009BE100D1430C /* ArtifactScenes */,
 			);
 			productName = Artifact;
 			productReference = 7DB07FFF2CD66FA800527F7B /* Artifact.app */;
@@ -124,7 +127,7 @@
 			mainGroup = 7DB07FF62CD66FA800527F7B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7D4F7A0C2CE255C300DFA80E /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */,
+				7DFD1AB82D009BE100D1430C /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7DB080002CD66FA800527F7B /* Products */;
@@ -362,7 +365,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		7D4F7A0C2CE255C300DFA80E /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */ = {
+		7DFD1AB82D009BE100D1430C /* XCLocalSwiftPackageReference "Packages/ArtifactScenes" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ArtifactScenes;
 		};
@@ -374,6 +377,10 @@
 			productName = ArtifactScenes;
 		};
 		7D4F7A0D2CE255C300DFA80E /* ArtifactScenes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ArtifactScenes;
+		};
+		7DFD1AB92D009BE100D1430C /* ArtifactScenes */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ArtifactScenes;
 		};
