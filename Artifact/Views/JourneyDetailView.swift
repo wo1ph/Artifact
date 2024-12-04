@@ -75,7 +75,6 @@ struct JourneyDetailView: View {
                 if let image = phase.image {
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
                         .frame(maxWidth: .infinity)
                         .frame(height: 400)
                         .clipped()
