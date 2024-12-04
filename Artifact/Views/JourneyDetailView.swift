@@ -27,7 +27,7 @@ struct JourneyDetailView: View {
                         
                         ProgressView(value: Double(viewedArtifactsCount), total: Double(journey.artifacts.count))
                             .progressViewStyle(.linear)
-                            .tint(buttonColor)
+                            .tint(progressColor)
                             .frame(width: 200)
                     }
                     .padding(.horizontal)
@@ -111,6 +111,14 @@ struct JourneyDetailView: View {
             return traitCollection.userInterfaceStyle == .dark
             ? UIColor(white: 0.2, alpha: 1)  // Slightly off-black for dark mode
             : UIColor(white: 0.1, alpha: 1)  // Near-black for light mode
+        })
+    }
+    
+    private var progressColor: Color {
+        Color(uiColor: UIColor { traitCollection in
+            return traitCollection.userInterfaceStyle == .dark
+                ? UIColor(white: 0.8, alpha: 1)  // Light gray/white for dark mode
+                : UIColor(white: 0.1, alpha: 1)  // Near-black for light mode
         })
     }
 }
