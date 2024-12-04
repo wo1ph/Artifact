@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showOnboarding = !OnboardingManager.shared.hasSeenOnboarding
     @StateObject private var journeysViewModel = JourneysViewModel()
     
     var body: some View {
@@ -20,6 +21,11 @@ struct ContentView: View {
         }
         .onAppear {
             journeysViewModel.loadJourneys()
+        }
+        .fullScreenCover(isPresented: $showOnboarding, onDismiss: {
+            OnboardingManager.shared.hasSeenOnboarding = true
+        }) {
+            OnboardingView()
         }
     }
 }
