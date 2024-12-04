@@ -5,7 +5,7 @@ struct ContentView: View {
     @StateObject private var journeysViewModel = JourneysViewModel()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     ForEach(journeysViewModel.journeys, id: \.self.title) { journey in
