@@ -86,14 +86,15 @@ struct JourneyDetailView: View {
             
             LinearGradient(
                 gradient: Gradient(colors: [
+                    .black.opacity(0.9),
                     .black.opacity(0.7),
-                    .black.opacity(0.3),
+                    .black.opacity(0.4),
                     .clear
                 ]),
                 startPoint: .bottom,
                 endPoint: .top
             )
-            .frame(height: 200)
+            .frame(height: 250)
             
             Text(journey.title)
                 .font(.system(size: 40, weight: .bold, design: .rounded))
@@ -115,5 +116,5 @@ struct JourneyDetailView: View {
 }
 
 #Preview {
-    JourneyDetailView(Journey.sampleJourneys[0])
+    JourneyDetailView(Journey.sampleJourneys[1])
 }
