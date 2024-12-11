@@ -6,7 +6,30 @@ ARtifact is an education technology app that allows students to learn in an imme
 
 Many educational experiences lack engagement, especially for students who benefit from a more visual and hands-on learning environment. Artifact aims to help solve this problem by bringing historical and scientific concepts to life - making learning fun, interactive, and accessible to students of various learning styles. Imagine students being able to tour the Roman Colosseum, explore the solar sytem, or visualize a chemical structure all within their classroom or even at home. The possibilities are endless! 
 
-# Kodeco capstone proposal
+- [x] Splash screen
+- [x] Onboarding screen
+- [x] Custom App Icon
+- [x] At least one animation
+  - Small animations throughout, e.g. Journey detail view animates the header when it is opened
+- [x] At least one scrollable list
+  - Main content view has a list of Journeys
+- [x] Some form of navigation
+  - Uses `NavigationStack`
+- [x] One or more network calls
+  - Makes network calls to get Journey data
+- [ ] No packages - **App does use a RealityComposer package, but I built it**
+- [x] The app stores data on device
+  - Uses `UserDefaults` to persist tracking how many ARtifacts were viewed in a Journey
+- [x] The app uses Swift modern concurrency
+ - Uses `async/await` and `Task` for networking and loading of 3D scenes
+- [x] Use an API of your choosing
+ - Uses a Journey API I built in AWS with API Gateway and a Lambda
+- [x] All typical errors related to network calls are handled
+  - Uses `try` and `throws`
+- [x] The code should follow a MVVM architecture
+  - Uses a viewmodel to manage fetching Journey data, and another viewmodel to manage loading 3D scenes
+
+# Original Kodeco capstone proposal
 
 ## MVP Features
 
