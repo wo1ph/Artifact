@@ -9,6 +9,7 @@ class JourneysViewModel: ObservableObject {
     private let service = JourneyService()
     
     func loadJourneys() {
+        // Don't make real network request in Preview
         guard !ProcessInfo.isPreview else {
             journeys = Journey.sampleJourneys
             return

@@ -25,6 +25,8 @@ struct ContentView: View {
         .fullScreenCover(isPresented: $showOnboarding, onDismiss: {
             OnboardingManager.shared.hasSeenOnboarding = true
         }) {
+            // show onboarding screen on launch,
+            // if the UserDefaults flag hasn't already been set to true
             OnboardingView()
         }
     }

@@ -59,49 +59,54 @@ struct BottomSheetView: View {
         .scaleEffect(isSelected ? 1.02 : 1.0)
         .animation(.spring(response: 0.3), value: isSelected)
         .sheet(isPresented: $showingDetail) {
-            ZStack(alignment: .top) {
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(.systemBackground))
-                    .shadow(radius: 5)
-                    .edgesIgnoringSafeArea(.bottom)
-                
-                VStack(spacing: 16) {
-                    Text(artifactName)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.top, 40)
-                    
-                    Spacer()
-                    
-                    Text(artifact.info)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(4)
-                        .padding(.horizontal, 30)
-                    
-                    AsyncImage(url: URL(string: "https://artifact-ios.s3.us-east-2.amazonaws.com/\(artifact.sceneName.lowercased())")) { phase in
-                        if let image = phase.image {
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .clipped()
-                                .cornerRadius(10)
-                        }
-                    }
-                    .padding()
-                    
-                    Spacer()
-                }
-                .padding(.bottom, 16)
-
-                RoundedRectangle(cornerRadius: 3)
-                    .frame(width: 40, height: 5)
-                    .foregroundColor(.gray)
-                    .opacity(0.5)
-                    .padding(.top, 8)
-            }
-            .frame(maxWidth: .infinity, alignment: .top)
+            sheetContent
         }
+    }
+    
+    var sheetContent: some View {
+        ZStack(alignment: .top) {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color(.systemBackground))
+                .shadow(radius: 5)
+                .edgesIgnoringSafeArea(.bottom)
+            
+            VStack(spacing: 16) {
+                Text(artifactName)
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
+                
+                Spacer()
+                
+                Text(artifact.info)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .padding(.horizontal, 30)
+                
+                AsyncImage(url: URL(string: "https://artifact-ios.s3.us-east-2.amazonaws.com/\(artifact.sceneName.lowercased())")) { phase in
+                    if let image = phase.image {
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipped()
+                            .cornerRadius(10)
+                    }
+                }
+                .padding()
+                
+                Spacer()
+            }
+            .padding(.bottom, 16)
+            
+            // sheet drag bar
+            RoundedRectangle(cornerRadius: 3)
+                .frame(width: 40, height: 5)
+                .foregroundColor(.gray)
+                .opacity(0.5)
+                .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, alignment: .top)
     }
 }
 
